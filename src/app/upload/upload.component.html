@@ -1,1 +1,19 @@
-<p>upload works!</p>
+<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+    <label for="dropdown">Select Option:</label>
+    <select id="dropdown" formControlName="dropdown">
+      <option value="Option1">Option 1</option>
+      <option value="Option2">Option 2</option>
+    </select>
+    
+    <label for="textInput">Text Input:</label>
+    <input type="text" id="textInput" formControlName="textInput">
+    
+    <label for="freeText">Free Text:</label>
+    <textarea id="freeText" formControlName="freeText"></textarea>
+    
+    <label for="fileUpload">File Upload:</label>
+    <input type="file" id="fileUpload" (change)="onFileSelected($event)">
+    
+    <button type="submit">Upload</button>
+  </form>
+  
