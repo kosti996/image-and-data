@@ -1,6 +1,6 @@
 # ImageAndData
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+This is an Angular and .NET application. Which task is to upload an image and a couple of fields (dropdown, input, free text) from the client to the server. On the backend side, the application will save it to Azure Blob.
 
 ## Development server
 
