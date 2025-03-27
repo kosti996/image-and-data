@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
@@ -12,7 +12,8 @@ import { MyDialogComponent } from '../my-dialog/my-dialog.component';
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule]
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UploadComponent {
   uploadForm: FormGroup;
@@ -52,10 +53,7 @@ export class UploadComponent {
 
     if (this.uploadForm.valid) {
       this.http.post('https://localhost:7122/Upload', formData).subscribe(
-        () => {
-          this.openDialog({ title: 'Success', description: 'Data are saved!' });
-          this.onReset();
-        },
+        () => this.openDialog({ title: 'Success', description: 'Data are saved!' }),
         () => this.openDialog({ title: 'Error', description: 'Please attach image' })
       );
     }
