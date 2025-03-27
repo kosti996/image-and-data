@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  imports: [ReactiveFormsModule]
+  styleUrl: './upload.component.css',
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule]
 })
 export class UploadComponent {
   uploadForm: FormGroup;
@@ -15,12 +20,16 @@ export class UploadComponent {
     this.uploadForm = this.fb.group({
       dropdown: [''],
       textInput: [''],
-      freeText: ['']
+      freeText: [''],
+      file: new FormControl(null, Validators.required)
     });
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   onSubmit() {
@@ -32,9 +41,11 @@ export class UploadComponent {
       formData.append('file', this.selectedFile, this.selectedFile.name);
     }
 
-    this.http.post('https://localhost:7122/Upload', formData).subscribe(
-      (response) => console.log('Success!', response),
-      (error) => console.error('Error!', error)
-    );
+    if (this.uploadForm.valid) {
+      this.http.post('https://localhost:7122/Upload', formData).subscribe(
+        (response) => console.log('Success!', response),
+        (error) => console.error('Error!', error)
+      );
+    }
   }
 }

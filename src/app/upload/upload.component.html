@@ -1,19 +1,26 @@
-<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-    <label for="dropdown">Select Option:</label>
-    <select id="dropdown" formControlName="dropdown">
-      <option value="Option1">Option 1</option>
-      <option value="Option2">Option 2</option>
-    </select>
-    
-    <label for="textInput">Text Input:</label>
-    <input type="text" id="textInput" formControlName="textInput">
-    
-    <label for="freeText">Free Text:</label>
-    <textarea id="freeText" formControlName="freeText"></textarea>
-    
-    <label for="fileUpload">File Upload:</label>
-    <input type="file" id="fileUpload" (change)="onFileSelected($event)">
-    
-    <button type="submit">Upload</button>
-  </form>
-  
+<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="container">
+
+  <mat-form-field>
+    <mat-label for="textInput">Title</mat-label>
+    <input matInput type="text" id="textInput" formControlName="textInput">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label for="freeText">Description</mat-label>
+    <textarea matInput id="freeText" formControlName="freeText"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label for="dropdown">Options</mat-label>
+    <mat-select id="dropdown" formControlName="dropdown">
+      <mat-option value="Option1">Option 1</mat-option>
+      <mat-option value="Option2">Option 2</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <input type="file" id="fileUpload" (change)="onFileSelected($event)">
+
+  <div class="submit-btn">
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </div>
+</form>

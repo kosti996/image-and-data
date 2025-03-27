@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.submit-btn,
+.file-name {
+    padding-top: 20px;
+}
+
+.choose-file-btn {
+    width: auto;
+}
