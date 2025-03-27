@@ -5,6 +5,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MyDialogComponent } from '../my-dialog/my-dialog.component';
 
 @Component({
   selector: 'app-upload',
@@ -16,12 +18,19 @@ export class UploadComponent {
   uploadForm: FormGroup;
   selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private dialog: MatDialog) {
     this.uploadForm = this.fb.group({
-      dropdown: [''],
-      textInput: [''],
-      freeText: [''],
-      file: new FormControl(null, Validators.required)
+      dropdown: new FormControl('', Validators.required),
+      textInput: new FormControl('', Validators.required),
+      freeText: new FormControl('', Validators.required),
+      file: new FormControl(null)
+    });
+  }
+
+  openDialog(message: { title: string, description: string }): void {
+    this.dialog.open(MyDialogComponent, {
+      width: '400px',
+      data: { message }
     });
   }
 
@@ -43,9 +52,17 @@ export class UploadComponent {
 
     if (this.uploadForm.valid) {
       this.http.post('https://localhost:7122/Upload', formData).subscribe(
-        (response) => console.log('Success!', response),
-        (error) => console.error('Error!', error)
+        () => {
+          this.openDialog({ title: 'Success', description: 'Data are saved!' });
+          this.onReset();
+        },
+        () => this.openDialog({ title: 'Error', description: 'Please attach image' })
       );
     }
+  }
+
+  onReset() {
+    this.uploadForm.reset();
+    this.uploadForm.get('file')?.reset();
   }
 }

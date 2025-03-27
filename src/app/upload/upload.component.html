@@ -18,9 +18,16 @@
     </mat-select>
   </mat-form-field>
 
-  <input type="file" id="fileUpload" (change)="onFileSelected($event)">
+  <input type="file" id="fileUpload" formControlName="file" (change)="onFileSelected($event)" accept="image/*">
 
-  <div class="submit-btn">
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+  <div class="btns">
+    <div class="submit-btn">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+
+    <div class="reset-btn">
+      <button mat-raised-button color="primary" (click)="onReset()">Reset</button>
+    </div>
   </div>
+
 </form>

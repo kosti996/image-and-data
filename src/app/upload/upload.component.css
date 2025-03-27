@@ -17,3 +17,10 @@
 .choose-file-btn {
     width: auto;
 }
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+}
